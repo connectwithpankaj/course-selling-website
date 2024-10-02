@@ -44,6 +44,13 @@ function Signup() {
             color="primary" 
             sx={{ paddingTop: 2 }}
             onClick={() => {
+              function callback2(data){
+                localStorage.setItem("token",data.tocken);
+              }
+              function callback1(res){
+                res.json().then(callback2)
+              }
+
               fetch("http://localhost:3000/admin/signup", {
                 method: "POST",
                 headers: {
@@ -54,6 +61,7 @@ function Signup() {
                   password : password
                 })
               })
+              .then(callback1)
             }}
           >
             Sign Up
