@@ -1,47 +1,60 @@
-import React from 'react';
-import { Button, Box, TextField, Typography, Container, Paper } from '@mui/material';
+// Signup.js
+import React from "react";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import { Typography } from "@mui/material";
 
 function Signin() {
   return (
-    <Container maxWidth="sm">
-      <Paper elevation={3} sx={{ padding: 4, marginTop: 8 }}>
-        <Typography variant="h4" align="center" gutterBottom>
-          Welcome to Coursera
-        </Typography>
-        <Typography variant="subtitle1" align="center" gutterBottom>
-          Sign In below
-        </Typography>
-        <Box
-          component="form"
-          sx={{
-            '& .MuiTextField-root': { paddingBottom: 2 },
+    <div>
+        <div
+          style={{
+            paddingTop: 150,
+            marginBottom: 10,
+            display : "flex",
+            justifyContent : "center"
           }}
         >
-          <TextField 
-            fullWidth 
-            id="username" 
-            label="Username" 
-            variant="outlined" 
+            <Typography variant="h6">
+                Welcome Back. Signin below
+            </Typography>
+        </div>
+    <div style={{ display:"flex", justifyContent: "center" }}>
+        <div
+          style={{
+            border: "2px solid black",
+            width: 400,
+            padding: 20,
+            borderRadius: 8,
+            backgroundColor : "#fff"
+          }}
+        >
+          <TextField
+            id="username"
+            label="Username"
+            variant="outlined"
+            fullWidth
+            margin="normal"
           />
-          <TextField 
-            fullWidth 
-            id="password" 
-            label="Password" 
-            variant="outlined" 
-            type="password" 
+          <TextField
+            id="password"
+            label="Password"
+            type="password"
+            variant="outlined"
+            fullWidth
+            margin="normal"
           />
-          <Button 
-            fullWidth 
-            size="large" 
-            variant="contained" 
-            color="primary" 
-            sx={{ paddingTop: 2 }}
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ marginTop: 10 }}
+            fullWidth
           >
-            Sign In
+            Signin
           </Button>
-        </Box>
-      </Paper>
-    </Container>
+        </div>
+    </div>
+    </div>
   );
 }
 

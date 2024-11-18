@@ -4,10 +4,10 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { Typography } from "@mui/material";
 
-function Signup() {
+function Addcourses() {
     // State variable
-    const[email, setEmail] = useState("")
-    const[password, setPassword] = useState("")
+    const[title, setTitle] = useState("")
+    const[description, setDescription] = useState("")
 
   return (
     <div>
@@ -20,7 +20,7 @@ function Signup() {
           }}
         >
             <Typography variant="h6">
-                Welcome to Coursera. Signup below
+                {/* Welcome to Coursera. Signup below */}
             </Typography>
         </div>
     <div style={{ display:"flex", justifyContent: "center" }}>
@@ -34,22 +34,21 @@ function Signup() {
           }}
         >
           <TextField
-            label="Username"
+            label="Title"
             variant="outlined"
             fullWidth
             margin="normal"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
           <TextField
-            id="password"
-            label="Password"
+            label="description"
             type="password"
             variant="outlined"
             fullWidth
             margin="normal"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
           <Button
             variant="contained"
@@ -64,20 +63,23 @@ function Signup() {
                 function callback1(res){
                     res.json().then(callback2);
                 }
-                fetch("http://localhost:3000/admin/signup", {
+                fetch("http://localhost:3000/admin/courses", {
                     method : "POST",
                     body : JSON.stringify({
-                        username : email,
-                        password : password
+                        title : title,
+                        description : description,
+                        imageLink : "",
+                        published : true
                     }),
                     headers : {
-                        "content-Type" : "application/json"
+                        "content-Type" : "application/json",
+                        "Authorization": `Bearer ${localStorage.getItem("token")}` 
                     }
                 })
                 .then(callback1)
             }}
           >
-            Signup
+            Add Courses
           </Button>
         </div>
     </div>
@@ -85,4 +87,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default Addcourses;
