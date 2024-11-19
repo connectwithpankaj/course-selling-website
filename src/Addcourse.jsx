@@ -1,77 +1,79 @@
-import React, { useState } from 'react';
-import { Button, Box, TextField, Typography, Container, Paper } from '@mui/material';
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import {Card} from "@mui/material";
+import {useState} from "react";
+import axios from "axios";
 
-function Addcourse() {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+function AddCourse() {
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [image, setImage] = useState("");
+    const [price, setPrice] = useState(0)
 
-  return (
-    <div>
-      <Container maxWidth="sm">
-        <Paper elevation={3} sx={{ padding: 4, marginTop: 8 }}>
-          <Typography variant="h4" align="center" gutterBottom>
-            Welcome to Coursera
-          </Typography>
-          <Typography variant="subtitle1" align="center" gutterBottom>
-            Add a Course
-          </Typography>
-          <Box
-            component="form"
-            sx={{
-              '& .MuiTextField-root': { paddingBottom: 2 },
-            }}
-          >
-            <TextField
-              fullWidth
-              onChange={(e) => setTitle(e.target.value)}
-              label="Title"
-              variant="outlined"
-            />
-            <TextField
-              fullWidth
-              onChange={(e) => setDescription(e.target.value)}
-              label="Description"
-              variant="outlined"
-            />
-            <Button
-              size="large"
-              variant="contained"
-              color="primary"
-              sx={{ paddingTop: 2 }}
-              onClick={() => {
-                function callback2(data) {
-                  localStorage.setItem("token", data.token); // Fixed typo here
-                }
-                function callback1(res) {
-                  res.json().then(callback2);
-                }
+    return <div style={{display: "flex", justifyContent: "center", minHeight: "80vh", justifyContent: "center", flexDirection: "column"}}>
+        <div style={{display: "flex", justifyContent: "center"}}>
+            <Card varint={"outlined"} style={{width: 400, padding: 20, marginTop: 30, height: "100%"}}>
+                <TextField
+                    style={{marginBottom: 10}}
+                    onChange={(e) => {
+                        setTitle(e.target.value)
+                    }}
+                    fullWidth={true}
+                    label="Title"
+                    variant="outlined"
+                />
 
-                fetch("http://localhost:3000/admin/courses", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer " + localStorage.getItem("token"), // Corrected the token fetching and format
-                  },
-                  body: JSON.stringify({
-                    title: title,
-                    description: description,
-                    imagelink: "",
-                    published: true
-                  }),
-                })
-                .then(callback1)
-                .catch((error) => {
-                  console.error("Error:", error);
-                });
-              }}
-            >
-              Add Course
-            </Button>
-          </Box>
-        </Paper>
-      </Container>
+                <TextField
+                    style={{marginBottom: 10}}
+                    onChange={(e) => {
+                        setDescription(e.target.value)
+                    }}
+                    fullWidth={true}
+                    label="Description"
+                    variant="outlined"
+                />
+
+                <TextField
+                    style={{marginBottom: 10}}
+                    onChange={(e) => {
+                        setImage(e.target.value)
+                    }}
+                    fullWidth={true}
+                    label="Image link"
+                    variant="outlined"
+                />
+
+                <TextField
+                    style={{marginBottom: 10}}
+                    onChange={(e) => {
+                        setPrice(e.target.value)
+                    }}
+                    fullWidth={true}
+                    label="Price"
+                    variant="outlined"
+                />
+
+                <Button
+                    size={"large"}
+                    variant="contained"
+                    onClick={async () => {
+                        await axios.post("http://localhost:3000/admin/courses", {
+                            title: title,
+                                description: description,
+                                imageLink: image,
+                                published: true,
+                                price
+                        }, {
+                            headers: {
+                                "Authorization": "Bearer " + localStorage.getItem("token")
+                            }
+                        });
+                        alert("Added course!");
+                    }}
+                > Add course</Button>
+            </Card>
+        </div>
     </div>
-  );
 }
 
-export default Addcourse;
+export default AddCourse;
